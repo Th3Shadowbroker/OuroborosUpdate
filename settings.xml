@@ -1,0 +1,29 @@
+<settings>
+    <pluginGroups>
+        <pluginGroup>org.sonarsource.scanner.maven</pluginGroup>
+    </pluginGroups>
+    <profiles>
+        <profile>
+            <id>sonar</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <sonar.host.url>${SONAR_SERVER_URL}</sonar.host.url>
+                <sonar.login>${SONAR_AUTH_TOKEN}</sonar.login>
+            </properties>
+        </profile>
+    </profiles>
+    <servers>
+        <server>
+            <id>th3shadowbroker-releases</id>
+            <username>${NEXUS_USER}</username>
+            <password>${NEXUS_USER}</password>
+        </server>
+        <server>
+            <id>th3shadowbroker-snapshots</id>
+            <username>${NEXUS_USER}</username>
+            <password>${NEXUS_USER}</password>
+        </server>
+    </servers>
+</settings>
