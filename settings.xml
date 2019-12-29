@@ -18,12 +18,12 @@
         <server>
             <id>th3shadowbroker-releases</id>
             <username>${NEXUS_USER}</username>
-            <password>${NEXUS_USER}</password>
+            <password>${NEXUS_PASS}</password>
         </server>
         <server>
             <id>th3shadowbroker-snapshots</id>
             <username>${NEXUS_USER}</username>
-            <password>${NEXUS_USER}</password>
+            <password>${NEXUS_PASS}</password>
         </server>
     </servers>
 </settings>
