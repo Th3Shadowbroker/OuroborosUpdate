@@ -29,20 +29,23 @@ public class OuroborosUpdater {
 
     public void checkForUpdate(UpdaterSource updaterSource, String current) {
         if (injectUpdaterInstance(updaterSource)) {
-            try {
-                UpdateSourceResponse updateSourceResponse = updaterSource.getAvailableVersion(current);
-                if (!updateSourceResponse.isEmpty()) {
-                    if (comparator.isUpdateAvailable(updateSourceResponse)) {
-                        updaterSource.onUpdateAvailable(updateSourceResponse);
+            Thread updateThread = new Thread(() -> {
+                try {
+                    UpdateSourceResponse updateSourceResponse = updaterSource.getAvailableVersion(current);
+                    if (!updateSourceResponse.isEmpty()) {
+                        if (comparator.isUpdateAvailable(updateSourceResponse)) {
+                            updaterSource.onUpdateAvailable(updateSourceResponse);
+                        } else {
+                            updaterSource.onNoUpdateAvailable(updateSourceResponse);
+                        }
                     } else {
-                        updaterSource.onNoUpdateAvailable(updateSourceResponse);
+                        throw new Exception("Source response was empty!");
                     }
-                } else {
-                    throw new Exception("Source response was empty!");
+                } catch (Exception ex) {
+                    updaterSource.onFail(ex);
                 }
-            } catch (Exception ex) {
-                updaterSource.onFail(ex);
-            }
+            });
+            updateThread.start();
         }
     }
 
